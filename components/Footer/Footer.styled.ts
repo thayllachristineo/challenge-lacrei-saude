@@ -83,18 +83,6 @@ export const LinkList = styled.ul`
   gap: ${({ theme }) => theme.spacing.xs};
 `;
 
-export const FooterLink = styled(Link)`
-  color: ${({ theme }) => theme.footer.text.default};
-  font-size: ${({ theme }) => theme.typography.text.sm.fontSize};
-  font-weight: ${({ theme }) => theme.fontWeight.regular};
-  line-height: ${({ theme }) => theme.typography.text.sm.lineHeight};
-
-  &:hover {
-    color: ${({ theme }) => theme.footer.text.linkHover};
-    text-decoration: none;
-  }
-`;
-
 export const Social = styled.ul`
   align-items: center;
   display: flex;
@@ -129,11 +117,6 @@ export const Legal = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: flex;
     flex-direction: column;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: underline;
   }
 `;
 

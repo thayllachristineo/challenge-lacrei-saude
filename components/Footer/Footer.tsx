@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from '@/components/Link';
 import {
   Bottom,
   BottomInner,
@@ -8,7 +9,6 @@ import {
   BrandLink,
   ColumnTitle,
   ContactNav,
-  FooterLink,
   Inner,
   InstitutionalNav,
   Legal,
@@ -147,7 +147,7 @@ const Footer = () => {
         <BrandColumn>
           <BrandLink href="/" aria-label="Lacrei Saúde — página inicial">
             <Image
-              src="/images/logo.svg"
+              src="/images/lacrei-horizontal-gradiente2.svg"
               alt="Logotipo Lacrei Saúde"
               width={170}
               height={48}
@@ -176,12 +176,14 @@ const Footer = () => {
           <ColumnTitle>Institucional</ColumnTitle>
           <LinkList>
             <li>
-              <FooterLink href="/">Início</FooterLink>
+              <Link href="/" variant="secondary">
+                Início
+              </Link>
             </li>
             <li>
-              <FooterLink href="/profissionais">
+              <Link href="/profissionais" variant="secondary">
                 Encontrar profissionais
-              </FooterLink>
+              </Link>
             </li>
           </LinkList>
         </InstitutionalNav>
@@ -190,12 +192,17 @@ const Footer = () => {
           <ColumnTitle>Contato</ColumnTitle>
           <LinkList>
             <li>
-              <FooterLink href="mailto:contato@lacreisaude.com.br">
+              <Link
+                href="mailto:contato@lacreisaude.com.br"
+                variant="secondary"
+              >
                 contato@lacreisaude.com.br
-              </FooterLink>
+              </Link>
             </li>
             <li>
-              <FooterLink href="/profissionais">Central de ajuda</FooterLink>
+              <Link href="/profissionais" variant="secondary">
+                Central de ajuda
+              </Link>
             </li>
           </LinkList>
         </ContactNav>
@@ -208,13 +215,9 @@ const Footer = () => {
           <p>
             Em caso de auxílio psicológico, ligue para 188 (CVV) ou acesse o
             site{' '}
-            <a
-              href="https://www.cvv.org.br"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href="https://www.cvv.org.br" variant="inline">
               www.cvv.org.br
-            </a>
+            </Link>
           </p>
           <p>
             Copyright © {year} Lacrei Saúde. Todos os direitos reservados. CNPJ:
