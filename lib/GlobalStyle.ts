@@ -12,8 +12,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
 
   html,
@@ -22,16 +22,16 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    -webkit-font-smoothing: antialiased;
+    background: ${({ theme }) => theme.color.background.default};
+    color: ${({ theme }) => theme.color.text.default};
+    display: flex;
+    flex-direction: column;
     font-family: ${({ theme }) => theme.fontFamily.body};
     font-size: ${({ theme }) => theme.typography.text.base.fontSize};
     font-weight: ${({ theme }) => theme.typography.text.base.fontWeight};
     line-height: ${({ theme }) => theme.typography.text.base.lineHeight};
-    background: ${({ theme }) => theme.color.background.default};
-    color: ${({ theme }) => theme.color.text.default};
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
@@ -40,25 +40,16 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3, h4 {
+    color: ${({ theme }) => theme.color.text.heading};
     font-family: ${({ theme }) => theme.fontFamily.heading};
     line-height: ${({ theme }) => theme.typography.headline.base.lineHeight};
-    color: ${({ theme }) => theme.color.text.heading};
-  }
-
-  a {
-    color: ${({ theme }) => theme.color.text.accent};
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
   }
 
   img,
   picture,
   svg {
-    max-width: 100%;
     display: block;
+    max-width: 100%;
   }
 
   button {
@@ -70,23 +61,23 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   :focus-visible {
+    border-radius: ${({ theme }) => theme.borderRadius.sm};
     outline: 3px solid ${({ theme }) => theme.color.border.accent};
     outline-offset: 2px;
-    border-radius: ${({ theme }) => theme.borderRadius.sm};
   }
 
   .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    z-index: 100;
     background: ${({ theme }) => theme.gradient.primary};
+    border-radius: 0 0 ${({ theme }) => theme.borderRadius.md} 0;
     color: ${({ theme }) => theme.color.text.invert};
     font-size: ${({ theme }) => theme.typography.text.smHigh200.fontSize};
     font-weight: ${({ theme }) => theme.typography.text.smHigh200.fontWeight};
+    left: -9999px;
     line-height: ${({ theme }) => theme.typography.text.smHigh200.lineHeight};
     padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.s};
-    border-radius: 0 0 ${({ theme }) => theme.borderRadius.md} 0;
+    position: absolute;
+    top: 0;
+    z-index: 100;
   }
 
   .skip-link:focus {

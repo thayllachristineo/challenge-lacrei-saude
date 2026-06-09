@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     'cuidado seguro',
   ],
   authors: [{ name: 'Lacrei Saúde' }],
+  icons: {
+    icon: '/images/fav.ico',
+    apple: '/images/lacrei-ls-mark.png',
+  },
   openGraph: {
     title: 'Lacrei Saúde — Cuidado seguro e acolhedor',
     description:

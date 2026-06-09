@@ -1,17 +1,15 @@
-import '@testing-library/jest-dom';
-
-if (typeof window !== 'undefined') {
+export const mockMatchMedia = (matches: boolean) => {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query: string) => ({
       addEventListener: jest.fn(),
       addListener: jest.fn(),
       dispatchEvent: jest.fn(),
-      matches: false,
+      matches,
       media: query,
       onchange: null,
       removeEventListener: jest.fn(),
       removeListener: jest.fn(),
     })),
   });
-}
+};

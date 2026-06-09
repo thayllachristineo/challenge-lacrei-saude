@@ -8,7 +8,11 @@ import { semanticTokens } from './tokens/semantic';
  * Gradiente:     theme.gradient.primary
  * Border radius: theme.borderRadius.sm
  * Border width:  theme.borderWidth.md
- * Componente:    theme.button.background.primary.default
+ * Componente:    theme.button.primary.background.default
+ * Link:          theme.link.inline.textColor
+ *                theme.link.default.minHeight
+ *                theme.link.secondary.textColor
+ *                theme.link.hover.textColor
  * Shadow:        theme.shadow.md
  * Spacing:       theme.spacing.s
  * Tipografia:    theme.typography.headline.xl
