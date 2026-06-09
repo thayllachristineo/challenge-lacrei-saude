@@ -38,6 +38,8 @@ describe('RootLayout', () => {
       'conteudo-principal',
     );
     expect(screen.getByText('Conteúdo da página')).toBeInTheDocument();
-    expect(screen.getAllByText('Lacrei Saúde').length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole('img', { name: 'Lacrei Saúde' }),
+    ).toBeInTheDocument();
   });
 });
