@@ -26,7 +26,7 @@ export const Header = styled.div`
   }
 
   p {
-    color: ${({ theme }) => theme.color.text.disabledSubtle};
+    color: ${({ theme }) => theme.color.text.default};
     font-size: ${({ theme }) => theme.typography.text.base.fontSize};
     line-height: ${({ theme }) => theme.typography.text.base.lineHeight};
   }
@@ -65,7 +65,7 @@ export const Card = styled.li`
   }
 
   p {
-    color: ${({ theme }) => theme.color.text.disabledSubtle};
+    color: ${({ theme }) => theme.color.text.default};
     font-size: ${({ theme }) => theme.typography.text.sm.fontSize};
     line-height: ${({ theme }) => theme.typography.text.sm.lineHeight};
   }

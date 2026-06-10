@@ -208,7 +208,7 @@ export const componentTokens = {
     text: {
       badge: text.pressed,
       accent: background.accent,
-      muted: text.disabledSubtle,
+      muted: text.default,
       onBrand: text.invert,
     },
   },
