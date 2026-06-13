@@ -188,7 +188,7 @@ export const componentTokens = {
     },
     text: {
       default: text.default,
-      muted: text.disabledSubtle,
+      muted: text.disabled,
       linkHover: text.accent,
       icon: text.accent,
     },

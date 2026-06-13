@@ -27,7 +27,7 @@ Aplicação web com **duas páginas interativas** focadas em **acessibilidade, r
 - ✅ **Acessibilidade**: HTML semântico (`header`, `nav`, `main`, `footer`, `article`, listas), `aria-*` aplicados, foco visível, _skip link_, `prefers-reduced-motion`, `lang="pt-BR"` e contraste validado.
 - ✅ **Performance**: páginas estáticas pré-renderizadas, fontes self-hosted (`next/font`, `display: swap`), SVGs inline (sem requisições extras), code-splitting e lazy loading de componente cliente.
 - ✅ **Next.js + TypeScript + Styled-Components** (SSR de estilos via registry + compilador).
-- ✅ **Testes unitários** (Jest + Testing Library) — **57 testes** em **23 suítes** (componentes, páginas e API).
+- ✅ **Testes unitários** (Jest + Testing Library) — **59 testes** em **24 suítes** (componentes, páginas, API e infra SSR).
 - ✅ **Mock de integração com API** (bônus) via Route Handler + JSON local.
 
 ---
@@ -88,35 +88,49 @@ npm run test:coverage
 
 Arquivos de teste **colocalizados** ao lado do código (`*.test.tsx` / `*.test.ts`).
 Componentes com tema usam o helper `test-utils/renderWithTheme.tsx`, que injeta o
-`ThemeProvider`. São **57 testes** em **23 suítes**:
+`ThemeProvider`. São **59 testes** em **24 suítes**:
 
-| Arquivo                                                               | Escopo                    | O que é validado                                                                                                                   |
-| --------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `components/Button/Button.test.tsx`                                   | `Button`                  | Renderiza como `<button>` e dispara `onClick`; vira link com `href`; `isLoading` aplica `aria-busy`, desabilita e bloqueia clique. |
-| `components/ButtonIcon/ButtonIcon.test.tsx`                           | `ButtonIcon`              | Botão de ícone acessível; alterna `aria-pressed`; estado desabilitado.                                                             |
-| `components/Header/Header.test.tsx`                                   | `Header`                  | `nav` principal e links; `aria-current` na página atual; menu mobile alterna `aria-expanded`.                                      |
-| `components/Link/Link.test.tsx`                                       | `Link`                    | Link interno; link externo com `rel` de segurança; estado `aria-disabled`.                                                         |
-| `components/Input/Input.test.tsx`                                     | `Input`                   | Label associada; texto de ajuda; estado de erro; botão de limpar valor.                                                            |
-| `components/Select/Select.test.tsx`                                   | `Select`                  | Label associada; texto de ajuda; estado de erro; opções/placeholder; `onChange`; desabilitado.                                     |
-| `components/ProfessionalCard/ProfessionalCard.test.tsx`               | `ProfessionalCard`        | Nome, especialidade e pronomes; favorito alterna `aria-pressed`; ação para o perfil.                                               |
-| `components/ProfessionalProfileCard/ProfessionalProfileCard.test.tsx` | `ProfessionalProfileCard` | Informações do profissional; favorito; navegação para o perfil.                                                                    |
-| `components/ProfessionalsExplorer/ProfessionalsExplorer.test.tsx`     | `ProfessionalsExplorer`   | Formulário acessível; carregamento inicial; erro de API; busca; estado vazio.                                                      |
-| `components/ProfessionalsHero/ProfessionalsHero.test.tsx`             | `ProfessionalsHero`       | Título e descrição da página de profissionais.                                                                                     |
-| `components/Hero/Hero.test.tsx`                                       | `Hero`                    | Título principal e CTAs da landing; diferenciais da plataforma.                                                                    |
-| `components/HowItWorks/HowItWorks.test.tsx`                           | `HowItWorks`              | Três passos do fluxo; âncora para navegação interna.                                                                               |
-| `components/Values/Values.test.tsx`                                   | `Values`                  | Título da seção e três pilares de valor.                                                                                           |
-| `components/CtaBand/CtaBand.test.tsx`                                 | `CtaBand`                 | Convite e link para encontrar profissionais.                                                                                       |
-| `components/Footer/Footer.test.tsx`                                   | `Footer`                  | Logo, links institucionais, redes sociais, aviso legal e copyright.                                                                |
-| `components/BackToTop/BackToTop.test.tsx`                             | `BackToTop`               | Foco após scroll; scroll suave ao topo ao clicar.                                                                                  |
-| `components/BackToTop/LazyBackToTop.test.tsx`                         | `LazyBackToTop`           | Carregamento lazy do botão voltar ao topo.                                                                                         |
-| `components/Container/Container.test.tsx`                             | `Container`               | Renderização do conteúdo filho.                                                                                                    |
-| `components/AppProviders/AppProviders.test.tsx`                       | `AppProviders`            | Providers globais renderizam o conteúdo.                                                                                           |
-| `app/page.test.tsx`                                                   | Página `/`                | Seções da landing page.                                                                                                            |
-| `app/profissionais/page.test.tsx`                                     | Página `/profissionais`   | Metadata; hero, explorer e botão voltar ao topo.                                                                                   |
-| `app/layout.test.tsx`                                                 | `RootLayout`              | Metadata/viewport globais; skip link, `main`, `nav` e estrutura do shell.                                                          |
-| `app/api/professionals/route.test.ts`                                 | `GET /api/professionals`  | Lista e especialidades; filtros por texto e especialidade; `Cache-Control: no-store`.                                              |
+| Arquivo                                                               | Escopo                     | O que é validado                                                                                                                   |
+| --------------------------------------------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `components/Button/Button.test.tsx`                                   | `Button`                   | Renderiza como `<button>` e dispara `onClick`; vira link com `href`; `isLoading` aplica `aria-busy`, desabilita e bloqueia clique. |
+| `components/ButtonIcon/ButtonIcon.test.tsx`                           | `ButtonIcon`               | Botão de ícone acessível; alterna `aria-pressed`; estado desabilitado.                                                             |
+| `components/Header/Header.test.tsx`                                   | `Header`                   | `nav` principal e links; `aria-current` na página atual; menu mobile alterna `aria-expanded`.                                      |
+| `components/Link/Link.test.tsx`                                       | `Link`                     | Link interno; link externo com `rel` de segurança; estado `aria-disabled`.                                                         |
+| `components/Input/Input.test.tsx`                                     | `Input`                    | Label associada; texto de ajuda; estado de erro; botão de limpar valor.                                                            |
+| `components/Select/Select.test.tsx`                                   | `Select`                   | Label associada; texto de ajuda; estado de erro; opções/placeholder; `onChange`; desabilitado.                                     |
+| `components/ProfessionalCard/ProfessionalCard.test.tsx`               | `ProfessionalCard`         | Nome, especialidade e pronomes; favorito alterna `aria-pressed`; ação para o perfil.                                               |
+| `components/ProfessionalProfileCard/ProfessionalProfileCard.test.tsx` | `ProfessionalProfileCard`  | Informações do profissional; favorito; navegação para o perfil.                                                                    |
+| `components/ProfessionalsExplorer/ProfessionalsExplorer.test.tsx`     | `ProfessionalsExplorer`    | Formulário acessível; carregamento inicial; erro de API; busca; estado vazio.                                                      |
+| `components/ProfessionalsHero/ProfessionalsHero.test.tsx`             | `ProfessionalsHero`        | Título e descrição da página de profissionais.                                                                                     |
+| `components/Hero/Hero.test.tsx`                                       | `Hero`                     | Título principal e CTAs da landing; diferenciais da plataforma.                                                                    |
+| `components/HowItWorks/HowItWorks.test.tsx`                           | `HowItWorks`               | Três passos do fluxo; âncora para navegação interna.                                                                               |
+| `components/Values/Values.test.tsx`                                   | `Values`                   | Título da seção e três pilares de valor.                                                                                           |
+| `components/CtaBand/CtaBand.test.tsx`                                 | `CtaBand`                  | Convite e link para encontrar profissionais.                                                                                       |
+| `components/Footer/Footer.test.tsx`                                   | `Footer`                   | Logo, links institucionais, redes sociais, aviso legal e copyright.                                                                |
+| `components/BackToTop/BackToTop.test.tsx`                             | `BackToTop`                | Foco após scroll; scroll suave ao topo ao clicar.                                                                                  |
+| `components/BackToTop/LazyBackToTop.test.tsx`                         | `LazyBackToTop`            | Carregamento lazy do botão voltar ao topo.                                                                                         |
+| `components/Container/Container.test.tsx`                             | `Container`                | Renderização do conteúdo filho.                                                                                                    |
+| `components/AppProviders/AppProviders.test.tsx`                       | `AppProviders`             | Providers globais renderizam o conteúdo.                                                                                           |
+| `app/page.test.tsx`                                                   | Página `/`                 | Seções da landing page.                                                                                                            |
+| `app/profissionais/page.test.tsx`                                     | Página `/profissionais`    | Metadata; hero, explorer e botão voltar ao topo.                                                                                   |
+| `app/layout.test.tsx`                                                 | `RootLayout`               | Metadata/viewport globais; skip link, `main`, `nav` e estrutura do shell.                                                          |
+| `app/api/professionals/route.test.ts`                                 | `GET /api/professionals`   | Lista e especialidades; filtros por texto e especialidade; `Cache-Control: no-store`.                                              |
+| `lib/registry.test.tsx`                                               | `StyledComponentsRegistry` | Renderização dos filhos; callback de `useServerInsertedHTML` para injeção de estilos SSR.                                          |
 
-Resultado esperado: `Test Suites: 23 passed`, `Tests: 57 passed`.
+Resultado esperado: `Test Suites: 24 passed`, `Tests: 59 passed`.
+
+### Cobertura de testes
+
+Última execução: `npm run test:coverage` (13/06/2026).
+
+| Métrica    | Cobertura  |
+| ---------- | ---------- |
+| Statements | **99,85%** |
+| Branches   | **98,59%** |
+| Functions  | **91,77%** |
+| Lines      | **99,85%** |
+
+**Sobre o `% Funcs` (91,77%):** statements e lines (~99,8%) cobrem o comportamento exercitado pelos testes. A diferença em _functions_ vem do Istanbul contabilizar funções internas geradas pelo styled-components em arquivos `*.styled.ts` — eles têm **100% de lines** e são validados indiretamente pelos testes dos componentes (`Button`, `ButtonIcon`, etc.). O registry SSR (`lib/registry.test.tsx`) cobre explicitamente o callback de `useServerInsertedHTML`.
 
 ---
 
@@ -142,12 +156,52 @@ Resultado esperado: `Test Suites: 23 passed`, `Tests: 57 passed`.
 
 ### Como medir (Lighthouse)
 
+**Recomendado:** auditar a URL de produção na Vercel (janela anônima, sem extensões):
+
+```
+https://tech-challenge-lacrei-saude.vercel.app/
+```
+
+Alternativa local:
+
 ```bash
 npm run build && npm run start
-# Abra o Chrome em http://localhost:3000, DevTools > Lighthouse > Analyze
+# Chrome > DevTools > Lighthouse > Mobile ou Desktop
+# Obrigatório: janela anônima, sem extensões e servidor de produção
 ```
 
 Metas do desafio: **Acessibilidade ≥ 90** e **Performance ≥ 80**.
+
+### Resultados Lighthouse (evidências)
+
+Auditorias em **13/06/2026** sobre a landing page (`/`) em **produção (Vercel)**, com **Lighthouse 13.2.0** (Chrome 149), janela anônima e sem extensões.
+
+| Página | Dispositivo | Performance | Acessibilidade | Best Practices | SEO | Relatório                                                                                          |
+| ------ | ----------- | ----------- | -------------- | -------------- | --- | -------------------------------------------------------------------------------------------------- |
+| `/`    | Mobile      | **99** ✅   | **96** ✅      | 100            | 100 | [landing-mobile-vercel-2026-06-13.html](public/lighthouse/landing-mobile-vercel-2026-06-13.html)   |
+| `/`    | Desktop     | **100** ✅  | **96** ✅      | 100            | 100 | [landing-desktop-vercel-2026-06-13.html](public/lighthouse/landing-desktop-vercel-2026-06-13.html) |
+
+**URL auditada:** [https://tech-challenge-lacrei-saude.vercel.app/](https://tech-challenge-lacrei-saude.vercel.app/)
+
+**Critérios atendidos:** Performance **99** (mobile) e **100** (desktop) — ambos ≥ 80. Acessibilidade **96** (meta ≥ 90) em ambos os dispositivos.
+
+| Dispositivo | FCP   | LCP   | TBT  | CLS | Speed Index |
+| ----------- | ----- | ----- | ---- | --- | ----------- |
+| Mobile      | 0,8 s | 2,0 s | 0 ms | 0   | 0,8 s       |
+| Desktop     | 0,2 s | 0,4 s | 0 ms | 0   | 0,2 s       |
+
+**Como visualizar os relatórios HTML**
+
+A pasta `public/` é a raiz de arquivos estáticos — **não** inclua `/public/` na URL.
+
+| Onde                                          | URL                                                                                             |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Local (após `npm run dev` ou `npm run start`) | http://localhost:3000/lighthouse/landing-mobile-vercel-2026-06-13.html                          |
+| Vercel (após deploy dos arquivos)             | https://tech-challenge-lacrei-saude.vercel.app/lighthouse/landing-mobile-vercel-2026-06-13.html |
+
+> **Importante:** o Next.js lê a pasta `public/` apenas na **inicialização** do servidor. Se os arquivos foram adicionados com o servidor já rodando, pare e suba de novo (`Ctrl+C` → `npm run dev` ou `npm run start`).
+
+Alternativa sem servidor: abra o arquivo direto no Chrome (duplo clique em `public/lighthouse/*.html` no Finder).
 
 ---
 
@@ -164,7 +218,46 @@ Metas do desafio: **Acessibilidade ≥ 90** e **Performance ≥ 80**.
 
 ## 🚢 Deploy (Vercel)
 
-> **🔗 Deploy:** `https://tech-challenge-lacrei-saude.vercel.app/`
+### Aplicação publicada
+
+| Ambiente      | URL                                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Produção      | **[https://tech-challenge-lacrei-saude.vercel.app/](https://tech-challenge-lacrei-saude.vercel.app/)**                               |
+| Landing       | [https://tech-challenge-lacrei-saude.vercel.app/](https://tech-challenge-lacrei-saude.vercel.app/)                                   |
+| Profissionais | [https://tech-challenge-lacrei-saude.vercel.app/profissionais](https://tech-challenge-lacrei-saude.vercel.app/profissionais)         |
+| API mock      | [https://tech-challenge-lacrei-saude.vercel.app/api/professionals](https://tech-challenge-lacrei-saude.vercel.app/api/professionals) |
+
+**Plataforma:** Vercel, conectada ao repositório Git. Cada push na branch principal dispara build e deploy automático.
+
+### Estratégia de rollback funcional
+
+Em caso de falha após um deploy, a reversão segue esta ordem (do mais rápido ao mais estruturado):
+
+1. **Rollback instantâneo na Vercel (recomendado em produção)**
+   - Acesse o [dashboard do projeto](https://vercel.com/) → **Deployments**.
+   - Localize o último deploy **estável** (status _Ready_, smoke test OK).
+   - Menu **⋯** → **Promote to Production** (ou **Instant Rollback**, conforme a UI).
+   - A Vercel passa a servir o artefato anterior **sem novo build**; o domínio público volta ao estado funcional em segundos.
+
+2. **Rollback via CLI**
+
+   ```bash
+   vercel rollback
+   ```
+
+   Reverte a produção para o deployment imediatamente anterior.
+
+3. **Rollback via Git (correção definitiva)**
+   - Identifique o commit problemático (`git log`).
+   - Reverta com `git revert <commit>` ou restaure a branch principal ao commit estável.
+   - Push dispara novo deploy; a Vercel mantém histórico de deployments para auditoria.
+
+4. **Validação antes de promover (prevenção)**
+   - Cada PR/branch gera **Preview Deployment** com URL única.
+   - Smoke test manual (navegação, busca em `/profissionais`, API mock) antes de merge na main.
+   - Só após validação o merge aciona o deploy de produção.
+
+**Critério de sucesso do rollback:** URLs públicas respondendo HTTP 200, landing e `/profissionais` renderizando, e `GET /api/professionals` retornando JSON — equivalente ao último deploy estável conhecido.
 
 ---
 
@@ -227,7 +320,7 @@ color: #018762;
 | **Profissionais**      | `ProfessionalsHero`, `ProfessionalsExplorer`, `ProfessionalProfileCard`, `ProfessionalCard` | Busca, listagem e card (adapter → profile card)               |
 | **Utilitários**        | `BackToTop`                                                                                 | Botão flutuante com lazy load (`LazyBackToTop`)               |
 
-Cada pasta segue o padrão `Component.tsx`, `Component.styled.ts`, `index.ts` e `*.test.tsx` (quando coberto).
+Cada pasta segue o padrão `Component.tsx`, `Component.styled.ts`, `Component.types.ts` (quando há props tipadas), `index.ts` e `*.test.tsx`. Exceção: `Container` exporta apenas o styled component via `Container.styled.ts`.
 
 ---
 
@@ -235,31 +328,49 @@ Cada pasta segue o padrão `Component.tsx`, `Component.styled.ts`, `index.ts` e 
 
 ```
 app/
-  layout.tsx                  # Root layout: fontes, metadata, favicon, providers
-  favicon.ico                 # Ícone LS (App Router)
-  page.tsx                    # Home (Server Component compondo as seções)
+  layout.tsx                    # Root layout: fontes, metadata, providers
+  layout.test.tsx
+  page.tsx                      # Home (Server Component compondo as seções)
+  page.test.tsx
+  favicon.ico                   # Ícone LS (App Router)
   profissionais/
-    page.tsx                  # Página de busca de profissionais
-    SectionSpacing.tsx        # Espaçamento da seção do explorer
-  api/professionals/route.ts  # API mock (Route Handler)
+    page.tsx                    # Página de busca de profissionais
+    page.test.tsx
+    SectionSpacing.tsx          # Espaçamento da seção do explorer
+  api/professionals/
+    route.ts                    # API mock (Route Handler)
+    route.test.ts
 components/
-  AppProviders/               # Registry + ThemeProvider + GlobalStyle
+  AppProviders/                 # Registry + ThemeProvider + GlobalStyle
   Header/  Footer/  Container/  Link/
-  Button/  ButtonIcon/  Input/  Select/
-  Hero/  Values/  HowItWorks/  CtaBand/           # Seções da landing
-  ProfessionalsHero/  ProfessionalsExplorer/      # Página de profissionais
-  ProfessionalProfileCard/  ProfessionalCard/     # Card + adapter de dados
-  BackToTop/                  # Botão + wrapper lazy (next/dynamic)
+  Button/  ButtonIcon/  Input/  Select/   # UI base (com *.types.ts)
+  Hero/  Values/  HowItWorks/  CtaBand/   # Seções da landing
+  ProfessionalsHero/  ProfessionalsExplorer/
+  ProfessionalProfileCard/  ProfessionalCard/
+  BackToTop/                    # Botão + wrapper lazy (LazyBackToTop)
 lib/
-  theme.ts  styled.d.ts  GlobalStyle.ts  registry.tsx  professionals.ts
-  tokens/primitives.ts  semantic.ts  components.ts   # Design tokens
-hooks/useMediaQuery.ts        # Hook de media query (disponível para layouts responsivos)
-public/images/                # lacrei-horizontal-gradiente2.svg, lacrei-ls-mark.png
-test-utils/renderWithTheme.tsx
-jest.config.ts  jest.setup.ts  # Jest + next/jest + matchMedia mock
-next.config.ts                # compiler.styledComponents
+  theme.ts                      # API única de tokens
+  styled.d.ts                   # Tipagem do DefaultTheme
+  GlobalStyle.ts                # Reset e estilos globais
+  registry.tsx                  # SSR de styled-components
+  registry.test.tsx
+  professionals.ts              # Dados mock tipados
+  tokens/
+    primitives.ts               # Valores brutos (paleta, spacing…)
+    semantic.ts                 # Papéis reutilizáveis
+    components.ts               # Tokens por peça de UI
+hooks/
+  useMediaQuery.ts              # Hook de media query
+public/
+  images/                       # lacrei-horizontal-gradiente2.svg, lacrei-ls-mark.png
+  lighthouse/                   # Relatórios Lighthouse (evidências Performance/A11y)
+test-utils/
+  renderWithTheme.tsx           # Helper de testes com ThemeProvider
+  mockMatchMedia.ts             # Mock reutilizável de matchMedia
+jest.config.ts  jest.setup.ts   # Jest + next/jest
+next.config.ts                  # compiler.styledComponents
 eslint.config.mjs
-.husky/pre-commit             # lint-staged + Prettier
+.husky/pre-commit               # lint-staged + Prettier
 # Testes colocalizados: *.test.tsx / *.test.ts ao lado de cada módulo
 ```
 

@@ -11,7 +11,7 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://challenge-lacrei-saude.vercel.app'),
+  metadataBase: new URL('https://tech-challenge-lacrei-saude.vercel.app'),
   title: {
     default: 'Lacrei Saúde — Cuidado seguro e acolhedor',
     template: '%s | Lacrei Saúde',
